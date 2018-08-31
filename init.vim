@@ -139,6 +139,7 @@ set shiftwidth=2
 set softtabstop=2
 set background=dark
 set laststatus=0
+set mouse=a
 
 colo darkblue
 hi Keyword ctermfg=darkcyan
