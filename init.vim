@@ -12,9 +12,9 @@ Plugin 'VundleVim/Vundle.vim'
 
 "" ***** BEGIN PLUGINS ******
 Plugin 'scrooloose/nerdTree'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'mhinz/vim-grepper.git'
-Plugin 'airblade/vim-gitgutter.git'
+Plugin 'mhinz/vim-signify.git'
 Plugin 'neovimhaskell/haskell-vim.git'
 Plugin 'parsonsmatt/intero-neovim.git'
 Plugin 'neomake/neomake.git'
@@ -22,6 +22,19 @@ Plugin 'alx741/vim-hindent.git'
 Plugin 'alx741/vim-stylishask.git'
 Plugin 'godlygeek/tabular.git'
 Plugin 'dan-t/vim-hsimport.git'
+Plugin 'tpope/vim-fugitive.git'
+
+"Plugin 'leafgarland/typescript-vim.git'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'HerringtonDarkholme/yats.vim'
+"Plugin 'Quramy/tsuquyomi.git'
+Plugin 'w0rp/ale.git'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'mhartington/nvim-typescript'
+Plugin 'janko-m/vim-test.git'
+Plugin 'junegunn/fzf.vim.git'
+Plugin 'vim-airline/vim-airline.git'
+Plugin 'scrooloose/nerdcommenter'
 "" ***** END PLUGINS *****
 
 " All of your Plugins must be added before the following line
@@ -71,6 +84,7 @@ let g:haskell_indent_in = 1
 let g:haskell_indent_guard = 2
 let g:haskell_indent_case_alternative = 1
 let g:cabal_indent_section = 2
+let g:intero_start_immediately = 1
 
 " neovim intero options
 " Automatically reload on save
@@ -89,7 +103,7 @@ au FileType haskell nnoremap <silent> <leader>nn :InteroOpen<CR>
 au FileType haskell nnoremap <silent> <leader>nh :InteroHide<CR>
 
 " Reload the current file into REPL
-au FileType haskell nnoremap <silent> <leader>nf :InteroLoadCurrentFile<CR>
+au FileType haskell nnoremap <silent> <leader>nf :InteroLoadCurrentFile<CR
 " Jump to the definition of an identifier
 au FileType haskell nnoremap <silent> <leader>ng :InteroGoToDef<CR>
 " Evaluate an expression in REPL
@@ -124,6 +138,33 @@ au FileType haskell nnoremap <silent> <leader>ims :HsimportSymbol<CR>
 " get the whole module
 au FileType haskell nnoremap <silent> <leader>imm :HsimportModule<CR>
 
+" enable deoplete for mhartington's vim ts plugin
+let g:deoplete#enable_at_startup = 1
+
+" set ALE fixers
+let g:ale_fixers = {'typescript': ['tslint']}
+let g:ale_linters = {'typescript': ['tslint', 'tsserver', 'typecheck']}
+" show lints on quickfix window 
+let g:ale_set_quickfix = 1
+let g:ale_set_signs = 0
+
+let g:gitgutter_enabled = 1
+
+let g:tsuquyomi_single_quote_import = 1
+" turn off checking typescript with neomake on save
+let g:neomake_typescript_enabled_makers = []
+
+" nvim-typescript
+" print func signature on echo area while in deoplete
+let g:nvim_typescript#signature_complete = 1
+let g:nvim_typescript#type_info_on_hold = 1
+
+" fzf with ctrlp like binding
+nnoremap <c-p> :FZF<cr>
+
+" attempt to fix the gutter not refreshing issue
+let g:signify_realtime = 1
+
 syntax on
 filetype plugin indent on
 
@@ -140,10 +181,17 @@ set softtabstop=2
 set background=dark
 set laststatus=0
 set mouse=a
+set nowrap
 
-colo darkblue
-hi Keyword ctermfg=darkcyan
-hi Constant ctermfg=5*
-hi Comment ctermfg=2*
-hi Normal ctermbg=none
-hi LineNr ctermfg=darkgrey
+colorscheme torte
+
+" gutter colors
+hi clear SignColumn
+hi SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
+hi SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
+hi SignifySignChange cterm=bold ctermbg=237  ctermfg=227
+"hi Keyword ctermfg=darkcyan
+"hi Constant ctermfg=5*
+"hi Comment ctermfg=2*
+"hi Normal ctermbg=none
+"hi LineNr ctermfg=darkgrey
